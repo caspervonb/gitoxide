@@ -578,9 +578,9 @@ impl Serialize for Integer {
 }
 
 impl FromStr for Integer {
-    type Err = String;
+    type Error = String;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Error> {
         if let Ok(value) = s.parse() {
             return Ok(Self { value, suffix: None });
         }
@@ -697,10 +697,10 @@ impl Serialize for IntegerSuffix {
 }
 
 impl FromStr for IntegerSuffix {
-    type Err = ();
+    type Error = ();
 
     #[inline]
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Error> {
         match s {
             "k" => Ok(Self::Kibi),
             "m" => Ok(Self::Mebi),
@@ -794,9 +794,9 @@ pub enum ColorParseError {
 }
 
 impl FromStr for Color {
-    type Err = ColorParseError;
+    type Error = ColorParseError;
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Error> {
         enum ColorItem {
             Value(ColorValue),
             Attr(ColorAttribute),
@@ -946,9 +946,9 @@ impl Serialize for ColorValue {
 }
 
 impl FromStr for ColorValue {
-    type Err = ();
+    type Error = ();
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Error> {
         let mut s = s;
         let bright = if s.starts_with("bright") {
             s = &s[6..];
@@ -1081,9 +1081,9 @@ impl Serialize for ColorAttribute {
 }
 
 impl FromStr for ColorAttribute {
-    type Err = ();
+    type Error = ();
 
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    fn from_str(s: &str) -> Result<Self, Self::Error> {
         let inverted = s.starts_with("no");
         let mut parsed = s;
 
